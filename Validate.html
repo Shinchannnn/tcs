@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #ffffff, #d7e8f7);
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        .delete-btn {
+            padding: 5px 10px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn:hover {
+            background-color: #e60000;
+        }
+        .save-config-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .save-config-button:hover {
+            background-color: #0056b3;
+        }
+        .add-step-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-step-button:hover {
+            background-color: #218838;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .left-align {
+            margin-right: auto;
+        }
+        .center-align {
+            margin-left: -8%;
+            margin-right: auto;
+        }
+
+        /* Modal Styles */
+        /* Modal Styles */
+/* Modal Styles */
+/* .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 50px;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    animation: fadeIn 0.5s ease;
+}
+*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 
+
+.modal-header {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    /* border-bottom: 2px solid #007bff; */
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.modal-header .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.modal-message {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    display: flex;
+    /* justify-content: flex-end; */
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 12px 18px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-button-confirm {
+    background-color: #28a745;
+    color: white;
+}
+
+.modal-button-confirm:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.modal-button-cancel {
+    background-color: #dc3545;
+    color: white;
+    margin-left: 10px;
+}
+
+.modal-button-cancel:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    padding-top: 60px;
+}
+.modal-header {
+            font-size: 26px;
+            font-weight: bold;
+            /* color: #fff; */
+            /* background-color: #dc3545; */
+            padding: 10px;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            /* display: flex; */
+            align-items: center;
+            text-align: center;
+            /* justify-content: space-between; */
+        }
+        .modal .close {
+            color: white;
+            background-color: red;
+            font-size: 60px;
+            border-radius: 50%;
+            position: relative;
+            bottom: 60px;
+            float: center;
+            font-weight: bold;
+            padding: 20px;
+
+            cursor: pointer;
+        }
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px; /* Increased padding for better spacing */
+    border: 1px solid #888;
+    width: 90%; /* Increased width */
+    max-width: 650px; /* Increased maximum width */
+    text-align: center;
+    min-height: 200px;
+    max-height: 400px;
+    border-radius: 8px;
+}
+#closeAlertBtn{
+    background-color: #dc3545;
+    color: white;
+    
+}
+#closeAlertBtn {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+ </style>
+</head>  
+<body>
+    <div class="container">
+        <h1>Validation Table</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Argument</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr>
+                    <td colspan="3">No key-value pair selected</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="templateNameDisplay">
+            <h2>Template Name: <span id="displayTemplateName"></span></h2>
+        </div>
+        <div class="button-container">
+            <button class="add-step-button left-align" id="addStepButton">Add Step</button>
+            <button class="save-config-button center-align" id="saveConfigButton">Save Configuration</button>
+        </div>
+    </div>
+
+    <!-- Modal for Delete Confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">                
+            <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+
+            <div class="modal-header">
+                Alert!
+            </div>
+            <div class="modal-message">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button modal-button-confirm" id="confirmDeleteBtn">Yes</button>
+                <button class="modal-button modal-button-cancel" id="cancelDeleteBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+<!-- 
+    <form method="POST" action="{{ ('template_structure') }}">
+        <label for="template_name">Template Name:</label>
+        <input type="text" name="template_name" required> -->
+    
+        <!-- <div id="key-value-pairs">
+            <label for="key">Key:</label>
+            <input type="text" name="key" placeholder="Key" required>
+            <label for="value">Value:</label>
+            <input type="text" name="value" placeholder="Value" required>
+        </div> -->
+    
+        <!-- <button type="submit">Save Configuration</button> -->
+    </form>
+
+    <script>
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showAlertModal(message, header = 'Alert', footer = '') {
+    const modalHtml = `
+        <div class="modal" id="alertModal" style="display:block;">
+            <div class="modal-content">
+                                    <span class="close" onclick="closeModal('alertModal')">&times;</span>
+
+                <div class="modal-header">
+                    ${header}
+                </div>
+                <div class="modal-message">${message}</div>
+                <div class="modal-footer">
+                    ${footer}
+                    <button class="modal-button" id="closeAlertBtn">OK</button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.getElementById('closeAlertBtn').addEventListener('click', function () {
+        closeModal('alertModal');
+    });
+    const alertModal = document.getElementById('alertModal');
+    alertModal.style.opacity = '0';
+    alertModal.style.display = 'block';
+    setTimeout(() => {
+        alertModal.style.opacity = '1';
+    }, 10);
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.remove(); // Remove modal from DOM after closing
+    }, 300);
+}
+        function handleSaveConfig() {
+            const templateName = sessionStorage.getItem('templateName');
+            if (!templateName) {
+                showAlertModal('Template name is required!', 'Validation Error');
+                return;
+            }
+            fetch('/api/templates', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    templateName,
+                    keyValuePairs: validatedPairs
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlertModal('Configuration saved successfully!', 'Success', `<button class="modal-button" onclick="window.location.href='/template_structure'">Go to Template Structure</button>`);
+                } else {
+                    showAlertModal('Failed to save configuration.', 'Error');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving configuration:', error);
+                showAlertModal('Failed to save configuration.', 'Error');
+            });
+        }
+
+        document.getElementById('saveConfigButton').addEventListener('click', handleSaveConfig);
+        const validatedPairs = JSON.parse(sessionStorage.getItem('validatedPairs')) || [];
+        const tableBody = document.getElementById('table-body');
+        const deleteModal = document.getElementById('deleteModal');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        let deleteIndex = null;
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+            if (validatedPairs.length > 0) {
+                validatedPairs.forEach((pair, index) => {
+                    const newRow = document.createElement('tr');
+                    newRow.id = `row-${index + 1}`;
+                    newRow.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${pair.key} : ${pair.value}</td>
+                        <td>
+                            <button class="delete-btn" onclick="openDeleteModal(${index})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            } else {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3">No key-value pair selected</td>
+                    </tr>
+                `;
+            }
+        }
+
+        const templateNameDisplay = document.getElementById('displayTemplateName');
+        const templateName = sessionStorage.getItem('templateName');
+
+        if (templateName) {
+            templateNameDisplay.textContent = templateName;
+        } else {
+            templateNameDisplay.textContent = 'No template name provided';
+        }
+
+        function openDeleteModal(index) {
+            deleteIndex = index;
+            deleteModal.style.display = "block";
+        }
+
+        confirmDeleteBtn.addEventListener('click', function () {
+            if (deleteIndex !== null) {
+                validatedPairs.splice(deleteIndex, 1);
+                sessionStorage.setItem('validatedPairs', JSON.stringify(validatedPairs));
+                renderTable();
+                deleteModal.style.display = "none";
+            }
+        });
+
+        cancelDeleteBtn.addEventListener('click', function () {
+            deleteModal.style.display = "none";
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('key');
+        const value = urlParams.get('value');
+        if (key && value) {
+            validatedPairs.push({ key, value });
+            sessionStorage.setItem('validatedPairs', JSON.stringify(validatedPairs));
+            const newUrl = window.location.origin + window.location.pathname;
+            history.replaceState({}, document.title, newUrl);
+        }
+
+        renderTable();
+
+        document.getElementById('addStepButton').addEventListener('click', function () {
+            window.history.back();
+        });
+        
+    </script>
+</body>
+</html>
